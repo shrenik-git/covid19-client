@@ -1,0 +1,108 @@
+<!--div class="container-fluid"-->
+    <div class="container-fluid">
+        <h3 align="center">
+            Covid19 - Global Statistics
+            <small class="text-muted">Summary of global cases for Covid-19</small>    
+        </h3>
+    </div>
+    <div class="container-fluid">
+        <div class="card-deck">
+            <div class= "card-columns" *ngIf="globalStats != null; else elseBlock">
+                    <div class="card mb-4 box-shadow border-dark">
+                        <div class="card-header">
+                            Global Summary        
+                        </div>
+                        <div class="card-body">
+                            <table class="card-table table table-stripped table-bordered table-hover">
+                                <!--caption> Covid19 - Global Statistics (courtesy - Postman COVID-19 API Resource Center)</caption-->
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th > Description </th>
+                                        <th> Data </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of globalStats | keyvalue">
+                                        <!--div *ngIf="item.key != 'updated'"-->
+                                            <td *ngIf="item.key != 'updated'">{{item.key | titlecase }}</td>
+                                            <td *ngIf="item.key != 'updated'">{{item.value | number}}</td>
+                                        <!--/div-->
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="text-info">
+                                        <td colspan="2">
+                                            Last updated: {{ globalStats['updated'] | date:'long' }}
+                                        </td>            
+                                    </tr>   
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Total Cases -->
+                    <div class="card mb-4 box-shadow border-primary">
+                        <h5 class="card-header text-dark">
+                            Cases
+                        </h5>
+                        <div class="card-body">
+                            <span class="h2 card-title text-primary">{{globalStats.cases| number}}</span>
+                            <p class="card-text">Total number of cases reported Globally</p>
+                            <a href="/covid-all-countries" class="card-link">view by country</a>
+                        </div>
+                    </div>
+
+                    <!-- Recoverd Cases -->
+                    <div class="card mb-4 box-shadow border-success">
+                        <h5 class="card-header text-dark">
+                            Recovered
+                        </h5>
+                        <div class="card-body">
+                            <span class="h2 card-title text-success">{{globalStats.recovered | number}} </span>
+                            <span class="h6 text-info">{{globalStats.recovered/globalStats.cases | percent:'1.2'}}</span>
+                            <p class="card-text">Total number of recoveries reported Globally</p>
+                            <a href="/covid-all-countries" class="card-link">view by country</a>
+                        </div>
+                    </div>
+
+                    <!-- Death Cases :( -->
+                    <div class="card mb-4 box-shadow border-danger">
+                        <h5 class="card-header text-dark">
+                            Deaths
+                        </h5>
+                        <div class="card-body">
+                            <span class="h2 card-title text-danger">{{globalStats.deaths| number}} </span>
+                            <span class="h6 text-warning">{{globalStats.deaths/globalStats.cases| percent:'1.2'}}</span>
+                            <p class="card-text">Total number of deaths reported Globally</p>
+                            <a href="/covid-all-countries" class="card-link">view by country</a>
+                        </div>
+                    </div>
+
+                    <!-- Active Cases -->
+                    <div class="card mb-4 box-shadow border-secondary">
+                        <h5 class="card-header text-dark">
+                            Active
+                        </h5>
+                        <div class="card-body">
+                            <span class="h2 card-title text-info">{{globalStats.active | number}} </span>
+                            <span class="h6 text-warning">{{globalStats.active/globalStats.cases| percent:'1.2'}}</span>
+                            <p class="card-text">Total number of active cases reported Globally</p>
+                            <a href="/covid-all-countries" class="card-link">view by country</a>
+                        </div>
+                    </div>
+
+            </div>
+            <ng-template #elseBlock>
+                <div class="card mb-4 box-shadow">
+                    <h5 class="card-header text-dark">
+                        Error!
+                    </h5>
+                    <div class="card-body">
+                        <h5 class="card-title text-danger">Something went wrong!</h5>
+                        <p class="card-text text-center text-info">Unable to fetch data, Please try after some time</p>
+                    </div>
+                </div>
+            </ng-template>
+        </div>    
+    </div>
+<!--/div-->
