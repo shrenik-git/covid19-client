@@ -124,7 +124,12 @@
                         </h5>
                         <div class="card-body">
                             <span class="h2 card-title text-info"> {{userLocation.country}} </span>
-                            <img src={{userFlagURL}}>    
+                            <img src={{userFlagURL}}>
+                            <!--a href={{userCountryDataURL}} class="card-link"> View Stats for {{userCountryName}}</a-->
+                            <div class="text-left">
+                                <a href={{userCountryDataURL}} class="card-link">View Stats for {{userCountryName}}</a>
+                            </div>
+                                
                         </div>
                     </div>
 

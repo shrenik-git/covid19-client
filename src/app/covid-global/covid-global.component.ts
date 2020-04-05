@@ -11,7 +11,10 @@ export class CovidGlobalComponent implements OnInit {
   globalStats = null;
   globalStatsError = null;
   userLocation = null;
+  userCountryName = null;
+  userCountryCode = null;
   userFlagURL = null;
+  userCountryDataURL = null;
 
   constructor ( private _dataProviderService: DataProviderService) {}
 
@@ -34,8 +37,18 @@ export class CovidGlobalComponent implements OnInit {
     this._dataProviderService.getLocationFromIP().subscribe(
       (response => {
         console.log(response);
+
+        // Extract data
         this.userLocation = response;
-        this.userFlagURL = "https://www.countryflags.io/" + response.countryCode + "/flat/32.png"
+        this.userCountryCode = response.countryCode;
+        this.userCountryName = response.country;
+
+        // Prepare flag URL
+        this.userFlagURL = "https://www.countryflags.io/" + this.userCountryCode + "/flat/32.png"
+
+        // Prepare country URL
+        //this.userCountryDataURL = "https://corona.lmao.ninja/countries/" + this.userCountryName.toLowerCase();
+        this.userCountryDataURL = "/covid-by-country?country=" + this.userCountryName.toLowerCase();
       }),
       (error => {
         console.log("Error response received!");
@@ -43,11 +56,6 @@ export class CovidGlobalComponent implements OnInit {
       })
     );
 
-    //this.getGMTDate();
-  }
+  } //ngOnInit()
 
-  getGMTDate() :string {
-    return Date.now().toString();
-  }
-
-}
+} // Class CovidGlobalComponent
