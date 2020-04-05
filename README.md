@@ -3,10 +3,10 @@ Dashboard for Covid19 data
 
 Pulls covid19 live data from published URLs and displays it as a dashboard.
 
-This dashbaord is developed using Angular.js using following APIs:
+This dashbaord is developed using Angular.js and Bootstrap 4 using following APIs:
 
 https://www.countryflags.io/
 
 http://ip-api.com/json
 
-Angular prod build is achived throgh Nodejs docker image and hosted using nginx docker image.
+Angular production build is achived throgh Nodejs docker image and hosted using nginx docker image.
