@@ -4,12 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CovidGlobalCardUrlsComponent } from './covid-global-card-urls/covid-global-card-urls.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    CovidGlobalCardUrlsComponent
   ],
   imports: [
     BrowserModule,

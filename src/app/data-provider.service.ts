@@ -10,6 +10,7 @@ export class DataProviderService {
   private _urlStatsByCountries = "https://corona.lmao.ninja/countries?sort=country";
   private _urlStatsByCountry = "https://corona.lmao.ninja/countries/";
   private _urlStatsHistorical = "https://corona.lmao.ninja/historical";
+  private _urlGetLocationFromIP = "http://ip-api.com/json";
 
   constructor(private _http: HttpClient) { }
 
@@ -27,5 +28,9 @@ export class DataProviderService {
 
   getStatsHistorical(){
     return this._http.get<any>(this._urlStatsHistorical);
+  }
+
+  getLocationFromIP() {
+    return this._http.get<any>(this._urlGetLocationFromIP);
   }
 }

@@ -6,9 +6,9 @@
         </h3>
     </div>
     <div class="container-fluid">
-        <div class="card-deck">
+        <div class="card-deck container-fluid">
             <div class= "card-columns" *ngIf="globalStats != null; else elseBlock">
-                    <div class="card mb-4 box-shadow border-dark">
+                    <div class="card box-shadow border-dark">
                         <div class="card-header">
                             Global Summary        
                         </div>
@@ -41,19 +41,22 @@
                     </div>
 
                     <!-- Total Cases -->
-                    <div class="card mb-4 box-shadow border-primary">
+                    <div class="card box-shadow border-primary" *ngIf="globalStats.cases">
                         <h5 class="card-header text-dark">
                             Cases
                         </h5>
                         <div class="card-body">
                             <span class="h2 card-title text-primary">{{globalStats.cases| number}}</span>
-                            <p class="card-text">Total number of cases reported Globally</p>
-                            <a href="/covid-all-countries" class="card-link">view by country</a>
+                            <p class="card-text">Total number of cases reported Globally across {{globalStats.affectedCountries}} countries</p>
+                            <p class="card-text text-info" *ngIf="globalStats.casesPerOneMillion">
+                                <small>{{globalStats.casesPerOneMillion}} cases per One Million</small>
+                            </p>
+                            <app-covid-global-card-urls></app-covid-global-card-urls>
                         </div>
                     </div>
 
                     <!-- Recoverd Cases -->
-                    <div class="card mb-4 box-shadow border-success">
+                    <div class="card box-shadow border-success" *ngIf="globalStats.recovered">
                         <h5 class="card-header text-dark">
                             Recovered
                         </h5>
@@ -61,12 +64,12 @@
                             <span class="h2 card-title text-success">{{globalStats.recovered | number}} </span>
                             <span class="h6 text-info">{{globalStats.recovered/globalStats.cases | percent:'1.2'}}</span>
                             <p class="card-text">Total number of recoveries reported Globally</p>
-                            <a href="/covid-all-countries" class="card-link">view by country</a>
+                            <app-covid-global-card-urls></app-covid-global-card-urls>
                         </div>
                     </div>
 
                     <!-- Death Cases :( -->
-                    <div class="card mb-4 box-shadow border-danger">
+                    <div class="card box-shadow border-danger" *ngIf="globalStats.deaths">
                         <h5 class="card-header text-dark">
                             Deaths
                         </h5>
@@ -74,12 +77,15 @@
                             <span class="h2 card-title text-danger">{{globalStats.deaths| number}} </span>
                             <span class="h6 text-warning">{{globalStats.deaths/globalStats.cases| percent:'1.2'}}</span>
                             <p class="card-text">Total number of deaths reported Globally</p>
-                            <a href="/covid-all-countries" class="card-link">view by country</a>
+                            <p class="card-text text-warning" *ngIf="globalStats.deathsPerOneMillion">
+                                <small>{{globalStats.deathsPerOneMillion}} deaths per One Million</small>
+                            </p>
+                            <app-covid-global-card-urls></app-covid-global-card-urls>
                         </div>
                     </div>
 
                     <!-- Active Cases -->
-                    <div class="card mb-4 box-shadow border-secondary">
+                    <div class="card box-shadow border-info" *ngIf="globalStats.active">
                         <h5 class="card-header text-dark">
                             Active
                         </h5>
@@ -87,7 +93,38 @@
                             <span class="h2 card-title text-info">{{globalStats.active | number}} </span>
                             <span class="h6 text-warning">{{globalStats.active/globalStats.cases| percent:'1.2'}}</span>
                             <p class="card-text">Total number of active cases reported Globally</p>
-                            <a href="/covid-all-countries" class="card-link">view by country</a>
+                            <span class="h2 card-title text-info">{{globalStats.critical | number}} </span>
+                            <span class="h6 text-warning">{{globalStats.critical/globalStats.active| percent:'1.2'}}</span>
+                            <p class="card-text">Total number of critical cases out of active cases reported Globally</p>
+                            <app-covid-global-card-urls></app-covid-global-card-urls>
+                        </div>
+                    </div>
+
+                    <!-- Today's Cases -->
+                    <div class="card box-shadow border-secondary" *ngIf="globalStats.todayCases && globalStats.todayDeaths">
+                        <div class="card-header text-info">
+                            <span class="h5">Today's Cases</span><br>
+                            <span class="text-muted"><small>({{ globalStats['updated'] | date: 'full':'GMT'}})</small></span>
+                        </div>
+                        <div class="card-body">
+                            <span class="h2 card-title text-info">{{globalStats.todayCases | number}} </span>
+                            <p class="card-text">Total number of new active cases reported today</p>
+                            <span class="h2 card-title text-danger">{{globalStats.todayDeaths | number}} </span>
+                            <p class="card-text">Total number of new death cases reported today</p>
+                            <span class="h2 card-title text-warning">{{globalStats.affectedCountries | number}} </span>
+                            <p class="card-text">Total number of countries affected till date</p>
+                            <app-covid-global-card-urls></app-covid-global-card-urls>
+                        </div>
+                    </div>
+
+                    <!-- Location Card -->
+                    <div class = "card box-shadow border-primary" *ngIf="userLocation">
+                        <h5 class="card-header text-primary">
+                            Your Country
+                        </h5>
+                        <div class="card-body">
+                            <span class="h2 card-title text-info"> {{userLocation.country}} </span>
+                            <img src={{userFlagURL}}>    
                         </div>
                     </div>
 
