@@ -1,1 +1,127 @@
-<p class="text-info">This page is under construction, please visit again for country specific data!</p>
+<div class = "container-fluid">
+    <h3 class="text-center">
+        Covid19 - Statistics
+        <small class="text-muted">Summary of cases for Covid-19</small>
+    </h3>
+</div>
+<div class = "container-fluid">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="countryNameSelect">Select Country</label>
+        </div>
+        <select [(ngModel)]="selectedCountry" (ngModelChange)="onSelectChanged()" class="custom-select" id="countryNameSelect">
+            <option selected>Choose...</option>
+            <option *ngFor="let country of countryNames; index as i" [value]="country">{{country}}</option>
+        </select>
+    </div>
+</div>
+<div class = "container-fluid">
+    <div class="card-deck container-fluid">
+        <div class= "card-columns" *ngIf="countryStats != null; else elseBlock">
+
+            <!-- Country -->
+            <div class="card box-shadow border-primary" *ngIf="countryStats">
+                <h5 class="card-header text-dark">
+                    Country
+                </h5>
+                <div class="card-body">
+                    <div class="container-fluid mt-3">
+                        <span class="h2 card-title text-primary text-center">{{countryStats.country}}</span>
+                    </div>
+                    <div class="container-fluid mt-3">
+                        <img class="img-fluid rounded" src={{countryStats.countryInfo.flag}}>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    Last updated: {{ countryStats['updated'] | date:'long' }}
+                </div>
+            </div>
+
+            <!-- Total Cases -->
+            <div class="card box-shadow border-primary" *ngIf="countryStats.cases != null">
+                <h5 class="card-header text-dark">
+                    Cases
+                </h5>
+                <div class="card-body">
+                    <span class="h2 card-title text-primary">{{countryStats.cases| number}}</span>
+                    <p class="card-text">Total number of cases reported in {{countryStats.country}} <img class="img-fluid rounded" src={{countryFlagUrl}}></p>
+                    <p class="card-text text-info" *ngIf="countryStats.casesPerOneMillion">
+                        <small>{{countryStats.casesPerOneMillion}} cases per One Million</small>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Recoverd Cases -->
+            <div class="card box-shadow border-success" *ngIf="countryStats.recovered != null">
+                <h5 class="card-header text-dark">
+                    Recovered
+                </h5>
+                <div class="card-body">
+                    <span class="h2 card-title text-success">{{countryStats.recovered | number}} </span>
+                    <span class="h6 text-info">{{countryStats.recovered/countryStats.cases | percent:'1.2'}}</span>
+                    <p class="card-text">Total number of recoveries reported in {{countryStats.country}} <img class="img-fluid rounded" src={{countryFlagUrl}}></p>
+                    <!--app-covid-global-card-urls></app-covid-global-card-urls-->
+                </div>
+            </div>
+
+            <!-- Death Cases :( -->
+            <div class="card box-shadow border-danger" *ngIf="countryStats.deaths != null">
+                <h5 class="card-header text-dark">
+                    Deaths
+                </h5>
+                <div class="card-body">
+                    <span class="h2 card-title text-danger">{{countryStats.deaths| number}} </span>
+                    <span class="h6 text-warning">{{countryStats.deaths/countryStats.cases| percent:'1.2'}}</span>
+                    <p class="card-text">Total number of deaths reported in {{countryStats.country}} <img class="img-fluid rounded" src={{countryFlagUrl}}></p>
+                    <p class="card-text text-warning" *ngIf="countryStats.deathsPerOneMillion">
+                        <small>{{countryStats.deathsPerOneMillion}} deaths per One Million</small>
+                    </p>
+                    <!--app-covid-global-card-urls></app-covid-global-card-urls-->
+                </div>
+            </div>
+
+            <!-- Active Cases -->
+            <div class="card box-shadow border-info" *ngIf="countryStats.active != null">
+                <h5 class="card-header text-dark">
+                    Active
+                </h5>
+                <div class="card-body">
+                    <span class="h2 card-title text-info">{{countryStats.active | number}} </span>
+                    <span class="h6 text-warning">{{countryStats.active/countryStats.cases| percent:'1.2'}}</span>
+                    <p class="card-text">Total number of active cases reported in {{countryStats.country}} <img class="img-fluid rounded" src={{countryFlagUrl}}></p>
+                    <span class="h2 card-title text-info">{{countryStats.critical | number}} </span>
+                    <span class="h6 text-warning">{{countryStats.critical/countryStats.active| percent:'1.2'}}</span>
+                    <p class="card-text">Total number of critical cases out of active cases reported in {{countryStats.country}} <img class="img-fluid rounded" src={{countryFlagUrl}}></p>
+                    <!--app-covid-global-card-urls></app-covid-global-card-urls-->
+                </div>
+            </div>
+
+            <!-- Today's Cases -->
+            <div class="card box-shadow border-secondary" *ngIf="countryStats.todayCases != null && countryStats.todayDeaths != null">
+                <div class="card-header text-info">
+                    <span class="h5">Today's Cases</span><br>
+                    <span class="text-muted"><small>({{ countryStats['updated'] | date: 'full':'GMT'}})</small></span>
+                </div>
+                <div class="card-body">
+                    <span class="h2 card-title text-info">{{countryStats.todayCases | number}} </span>
+                    <p class="card-text">Total number of new active cases reported today</p>
+                    <span class="h2 card-title text-danger">{{countryStats.todayDeaths | number}} </span>
+                    <p class="card-text">Total number of new death cases reported today</p>
+                    <p>in {{countryStats.country}} <img class="img-fluid rounded" src={{countryFlagUrl}}></p>
+                    <!--app-covid-global-card-urls></app-covid-global-card-urls-->
+                </div>
+            </div>
+        </div>
+        <ng-template #elseBlock>
+            <div class="card mb-4 box-shadow">
+                <h5 class="card-header text-dark">
+                    Error!
+                </h5>
+                <div class="card-body">
+                    <h5 class="card-title text-danger">Something went wrong!</h5>
+                    <p class="card-text text-center text-info">Unable to fetch data, Please try after some time</p>
+                </div>
+            </div>
+        </ng-template>
+    </div>    
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataProviderService } from '../data-provider.service';
+//import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-covid-global',
@@ -16,7 +17,7 @@ export class CovidGlobalComponent implements OnInit {
   userFlagURL = null;
   userCountryDataURL = null;
 
-  constructor ( private _dataProviderService: DataProviderService) {}
+  constructor ( private _dataProviderService: DataProviderService /*, private _router: Router*/) {}
 
   ngOnInit(): void {
 
@@ -57,5 +58,11 @@ export class CovidGlobalComponent implements OnInit {
     );
 
   } //ngOnInit()
+
+  /*
+  getDataByCountry() {
+    this._router.navigate(['/covid-by-country',{country: this.userCountryName}]);
+  }
+  */
 
 } // Class CovidGlobalComponent

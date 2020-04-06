@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DataProviderService } from '../data-provider.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+//import { CountrySelectComponent } from '../country-select/country-select.component';
 
 @Component({
   selector: 'app-covid-by-country',
@@ -7,9 +10,72 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CovidByCountryComponent implements OnInit {
 
-  constructor() { }
+  countryStats = null;
+  paramCountry = null;
+  countryFlagUrl = null;
+
+  countryNames = null;
+  selectedCountry = "";
+
+  constructor(private _dataProviderService: DataProviderService, private _route: ActivatedRoute, private _router: Router) { }
 
   ngOnInit(): void {
+    this._route.queryParamMap.subscribe(
+      (params: ParamMap) => {
+        this.paramCountry = params.get('country');
+        console.log('ngOnInit: Selected Country is:' + this.paramCountry);
+        if ( this.paramCountry != null ) {
+          console.log("Getting data for:"+this.paramCountry);
+          this._dataProviderService.getStatsByCountry(this.paramCountry).subscribe(
+            ( response => {
+              this.countryStats = response;
+              console.log(this.countryStats);
+              this.countryFlagUrl = "https://www.countryflags.io/" + this.countryStats.countryInfo.iso2 + "/flat/32.png"
+            }),
+            ( error => {
+              console.log("Error response received!");
+              console.log(error);
+              this.countryStats = null;
+            })
+          );
+        } // if
+        else
+        {
+          console.log("No Country Name Provided!");
+        } // else   
+      } // Parammap
+    ); // subscribe
+
+    console.log("Populating Country Names");
+    this.countryNames = this._dataProviderService.getCountryNames();
+    this.selectedCountry = this.paramCountry;
+/*
+    if ( this.paramCountry != null ) {
+      console.log("Getting data for:"+this.paramCountry);
+      this._dataProviderService.getStatsByCountry(this.paramCountry).subscribe(
+        ( response => {
+          this.countryStats = response;
+          console.log(this.countryStats);
+        }),
+        ( error => {
+          console.log("Error response received!");
+          console.log(error);
+        })
+      );
+    }
+    else
+    {
+      console.log("No Country Name Provided!");
+    }
+*/
+    console.log("Done ngOnInit!");
+  }
+
+  onSelectChanged() {
+    console.log("Select Changed:" + this.selectedCountry);
+
+    // Navigate and load new country's data
+    this._router.navigate(['/covid-by-country'],{ queryParams: {'country': this.selectedCountry.toLowerCase()}});
   }
 
 }
