@@ -17,6 +17,8 @@ export class CovidByCountryComponent implements OnInit {
   countryNames = null;
   selectedCountry = "";
 
+  errorMessage = "";
+
   constructor(private _dataProviderService: DataProviderService, private _route: ActivatedRoute, private _router: Router) { }
 
   ngOnInit(): void {
@@ -36,12 +38,15 @@ export class CovidByCountryComponent implements OnInit {
               console.log("Error response received!");
               console.log(error);
               this.countryStats = null;
+              this.errorMessage = "Oops! Something went wrong (select country name and try again).";
             })
           );
         } // if
         else
         {
+          this.countryStats = null;
           console.log("No Country Name Provided!");
+          this.errorMessage = "Please select Country Name"; 
         } // else   
       } // Parammap
     ); // subscribe

@@ -21,6 +21,8 @@ export class CovidGlobalComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.globalStats = {};
+
     // Get Global statistics
     this._dataProviderService.getStatsGlobal().subscribe(
       (response => {
@@ -31,6 +33,7 @@ export class CovidGlobalComponent implements OnInit {
         console.log("Error response received!");
         console.log(error);
         this.globalStatsError = error;
+        this.globalStats = {};
       })
     );
 
