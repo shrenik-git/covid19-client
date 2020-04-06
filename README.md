@@ -9,4 +9,7 @@ https://www.countryflags.io/
 
 http://ip-api.com/json
 
+Country List, Reference Data Set:
+https://gist.github.com/incredimike/1469814
+
 Angular production build is achived throgh Nodejs docker image and hosted using nginx docker image.
