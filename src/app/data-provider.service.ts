@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class DataProviderService {
 
   private _urlStatsGlobal = "https://corona.lmao.ninja/all";
-  private _urlStatsByCountries = "https://corona.lmao.ninja/countries?sort=country";
+  private _urlStatsByCountries = "https://corona.lmao.ninja/countries?sort=cases";
   private _urlStatsByCountry = "https://corona.lmao.ninja/countries/";
   private _urlStatsHistorical = "https://corona.lmao.ninja/historical";
   private _urlGetLocationFromIP = "http://ip-api.com/json";
