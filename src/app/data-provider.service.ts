@@ -286,8 +286,47 @@ export class DataProviderService {
     "Zimbabwe",
     "Åland Islands"
   ];
-
+  
+  sourceCountryList = [];
+  
   getCountryNames() {
-    return this.countryList;
+    //console.log("getCountryNames(): countryList:" + this.countryList.length);
+    //console.log("getCountryNames(): sourceCountryList:" + this.sourceCountryList.length);
+    // Populate from source, once!
+    
+    if (this.sourceCountryList.length === 0) {
+      //console.log("Entered if");
+      this.populateCountryNamesFromSource();
+    }
+    
+    // Verify and return data
+    if (this.sourceCountryList.length != 0) {
+      console.log("returning sourceCountryList");
+      //console.log(this.sourceCountryList);
+      return this.sourceCountryList;
+    } else {
+      console.log("returning countryList");
+      return this.countryList;
+    }
   }
+
+  populateCountryNamesFromSource() {
+    // get the list of countries from source and populate
+    this.getStatsByCountries().subscribe(
+      (response => {
+        console.log("Country List response received!");
+        //console.log(response);
+        this.sourceCountryList = [];
+        response.forEach(element => {
+          this.sourceCountryList.push( element.country);
+        });
+        this.sourceCountryList.sort();
+        console.log("Total " + this.sourceCountryList.length + " country populated");
+      }),
+      (error => {
+        console.log("Country List response failed");
+      })
+    );
+  }
+ 
 }

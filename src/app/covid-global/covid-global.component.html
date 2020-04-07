@@ -51,7 +51,7 @@
                             <p class="card-text text-info" *ngIf="globalStats.casesPerOneMillion">
                                 <small>{{globalStats.casesPerOneMillion}} cases per One Million</small>
                             </p>
-                            <app-covid-global-card-urls></app-covid-global-card-urls>
+                            <app-covid-global-card-urls [userCountry]="userCountryName"></app-covid-global-card-urls>
                         </div>
                     </div>
 
@@ -64,7 +64,7 @@
                             <span class="h2 card-title text-success">{{globalStats.recovered | number}} </span>
                             <span class="h6 text-info">{{globalStats.recovered/globalStats.cases | percent:'1.2'}}</span>
                             <p class="card-text">Total number of recoveries reported Globally</p>
-                            <app-covid-global-card-urls></app-covid-global-card-urls>
+                            <app-covid-global-card-urls [userCountry]="userCountryName"></app-covid-global-card-urls>
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@
                             <p class="card-text text-warning" *ngIf="globalStats.deathsPerOneMillion">
                                 <small>{{globalStats.deathsPerOneMillion}} deaths per One Million</small>
                             </p>
-                            <app-covid-global-card-urls></app-covid-global-card-urls>
+                            <app-covid-global-card-urls [userCountry]="userCountryName"></app-covid-global-card-urls>
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@
                             <span class="h2 card-title text-info">{{globalStats.critical | number}} </span>
                             <span class="h6 text-warning">{{globalStats.critical/globalStats.active| percent:'1.2'}}</span>
                             <p class="card-text">Total number of critical cases out of active cases reported Globally</p>
-                            <app-covid-global-card-urls></app-covid-global-card-urls>
+                            <app-covid-global-card-urls [userCountry]="userCountryName"></app-covid-global-card-urls>
                         </div>
                     </div>
 
@@ -113,7 +113,7 @@
                             <p class="card-text">Total number of new death cases reported today</p>
                             <span class="h2 card-title text-warning">{{globalStats.affectedCountries | number}} </span>
                             <p class="card-text">Total number of countries affected till date</p>
-                            <app-covid-global-card-urls></app-covid-global-card-urls>
+                            <app-covid-global-card-urls [userCountry]="userCountryName"></app-covid-global-card-urls>
                         </div>
                     </div>
 

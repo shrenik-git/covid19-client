@@ -22,11 +22,17 @@ export class CovidByCountryComponent implements OnInit {
   constructor(private _dataProviderService: DataProviderService, private _route: ActivatedRoute, private _router: Router) { }
 
   ngOnInit(): void {
+
     this._route.queryParamMap.subscribe(
       (params: ParamMap) => {
         this.paramCountry = params.get('country');
         console.log('ngOnInit: Selected Country is:' + this.paramCountry);
-        if ( this.paramCountry != null ) {
+
+        // Validate parameter and retrieve data from source
+        if ( this.paramCountry != null && 
+              this.paramCountry != undefined && 
+              this.paramCountry != "" &&
+              this.paramCountry != "null") {
           console.log("Getting data for:"+this.paramCountry);
           this._dataProviderService.getStatsByCountry(this.paramCountry).subscribe(
             ( response => {
@@ -52,27 +58,9 @@ export class CovidByCountryComponent implements OnInit {
     ); // subscribe
 
     console.log("Populating Country Names");
+    //this._dataProviderService.populateCountryNamesFromSource();
     this.countryNames = this._dataProviderService.getCountryNames();
     this.selectedCountry = this.paramCountry;
-/*
-    if ( this.paramCountry != null ) {
-      console.log("Getting data for:"+this.paramCountry);
-      this._dataProviderService.getStatsByCountry(this.paramCountry).subscribe(
-        ( response => {
-          this.countryStats = response;
-          console.log(this.countryStats);
-        }),
-        ( error => {
-          console.log("Error response received!");
-          console.log(error);
-        })
-      );
-    }
-    else
-    {
-      console.log("No Country Name Provided!");
-    }
-*/
     console.log("Done ngOnInit!");
   }
 

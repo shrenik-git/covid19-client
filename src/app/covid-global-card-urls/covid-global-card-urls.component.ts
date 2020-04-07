@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-covid-global-card-urls',
@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CovidGlobalCardUrlsComponent implements OnInit {
 
+  @Input() public userCountry;
+
+  countryStatsURL = "";
+
   constructor() { }
 
   ngOnInit(): void {
+    this.countryStatsURL = "/covid-by-country/?country=" + this.userCountry;
   }
 
 }
