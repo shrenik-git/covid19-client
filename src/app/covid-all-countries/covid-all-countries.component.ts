@@ -8,7 +8,7 @@ import { DataProviderService } from '../data-provider.service';
 })
 export class CovidAllCountriesComponent implements OnInit {
 
-  allCountryStats = {};
+  allCountryStats = [];
   allCountryStatsError = null;
 
   constructor(private _dataProviderService: DataProviderService) { }
@@ -19,7 +19,7 @@ export class CovidAllCountriesComponent implements OnInit {
       (response => {
         console.log(response);
         this.allCountryStats = response;
-        this.allCountryStats;
+        this.allCountryStats.sort();
       }),
       (error => {
         console.log("Error response received!");
