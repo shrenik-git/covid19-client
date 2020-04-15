@@ -12,9 +12,9 @@
                     Country wise Summary        
                 </div>
                 <div class="card-body">
-                    <table class="card-table table table-stripped table-bordered table-hover table-responsive-sm">
+                    <table class="card-table table table-stripped table-bordered table-hover table-responsive" style="overflow-y: auto;height:400px;">
                         <!--caption> Covid19 - Global Statistics (courtesy - Postman COVID-19 API Resource Center)</caption-->
-                        <thead class="thead-light">
+                        <thead class="thead-light" style="height: auto;">
                             <tr class="text-center">
                                 <th> Country </th>
                                 <th> Updated </th>
@@ -31,7 +31,7 @@
                                 <th> Tests Per One Million </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody> 
                             <tr *ngFor="let item of allCountryStats">
                                 <!--div *ngIf="item.key != 'updated'"-->
                                     <!--td *ngIf="item.key != 'updated'">{{item.key | titlecase }}</td-->
