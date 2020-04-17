@@ -6,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DataProviderService {
 
-  private _urlStatsGlobal = "https://corona.lmao.ninja/all";
-  private _urlStatsByCountries = "https://corona.lmao.ninja/countries?sort=cases";
-  private _urlStatsByCountry = "https://corona.lmao.ninja/countries/";
-  private _urlStatsHistorical = "https://corona.lmao.ninja/historical";
+  private _urlStatsGlobal = "https://corona.lmao.ninja/v2/all";
+  private _urlStatsByCountries = "https://corona.lmao.ninja/v2/countries?sort=cases";
+  private _urlStatsByCountry = "https://corona.lmao.ninja/v2/countries/";
+  private _urlStatsHistorical = "https://corona.lmao.ninja/v2/historical";
   private _urlGetLocationFromIP = "http://ip-api.com/json";
 
   constructor(private _http: HttpClient) { }
